@@ -1,0 +1,111 @@
+int vcc = 2;
+int trig = 3;
+int echo = 4;
+int gnd = 5;
+int tempPin = A3;
+int temperature;
+int temp;
+int ldrpin = A2;
+int co = A4;
+const int gasPin = A0;
+unsigned long startMillis;
+
+void setup()
+{
+  pinMode (vcc, OUTPUT);
+  pinMode (gnd, OUTPUT);
+  pinMode(tempPin, INPUT);
+  startMillis = millis();
+  Serial.begin(9600);
+}
+
+void loop()
+{
+
+  UltraSonic();
+  delay(1000);
+  TempSensor();
+  delay(1000);
+  LDR();
+  delay(1000);
+  CarbonMono();
+  delay(1000);
+  mqSensor();
+  delay(2000);
+
+}
+
+void UltraSonic()
+{
+
+  digitalWrite(vcc, HIGH);
+  long duration, inches, cm;
+  pinMode(trig, OUTPUT);
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(trig, LOW);
+
+
+  pinMode(echo, INPUT);
+  duration = pulseIn(echo, HIGH);
+
+  inches = microsecondsToInches(duration);
+  cm = microsecondsToCentimeters(duration);
+  Serial.print("Distance:");
+  //Serial.print(inches);
+  // Serial.print("in, ");
+  Serial.print(cm);
+  //Serial.print("cm");
+  Serial.println();
+}
+
+void TempSensor()
+{
+
+  temp = readTemp();
+  Serial.print("Temperature is:");
+  Serial.println(temp);
+}
+
+void LDR()
+{
+  ldrpin = analogRead(A2);
+  Serial.print("Light intensity is:");
+  Serial.println(ldrpin);
+
+
+}
+
+void CarbonMono()
+{
+  unsigned int gasLevel = analogRead(co);
+
+  Serial.print("Carbon Monoxide:");
+  Serial.println(gasLevel);
+  
+}
+
+void mqSensor()
+{
+  Serial.print("Methane:");
+  Serial.println(analogRead(gasPin));
+}
+
+int readTemp()
+{
+  temperature = analogRead(tempPin);
+  return (temperature * 0.488);
+}
+long microsecondsToInches(long microseconds)
+{
+  microseconds = microseconds / 74 / 2;
+  return microseconds;
+}
+
+long microsecondsToCentimeters(long microseconds)
+{
+  microseconds = microseconds / 29 / 2;
+  return microseconds;
+}

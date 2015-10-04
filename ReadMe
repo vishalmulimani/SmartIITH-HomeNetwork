@@ -1,0 +1,14 @@
+There are 5 Folders
+Folder 1 : App Code --> There is a source code for App
+Folder 2 : Arduino Code --> : Final_1 --> The code for overall arduino sensors
+							: smart_Steet --> code for Smart Street 
+Folder 3 : DataBaseSQL --> : schema.sql --> The SQL DataBase
+Folder 4 : FromArduinoToOutput : --> It contains Output
+Folder 5 : PythonScriptOnServer --> : --> buzzer.py --> Buzzer Sensor
+									: --> Events.java --> Triggers the Events
+									: --> light.py --> Glows the light
+									: --> Main.java --> Main File
+									: --> MobileServer.java --> Communicating with mobile App
+									: --> MotionUdp.java --> UDP Server for motion sensors
+									: --> TemperatureUDP.java --> UDP Server for Temperature Sensor
+									
